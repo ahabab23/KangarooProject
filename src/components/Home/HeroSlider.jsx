@@ -7,21 +7,24 @@ const slides = [
     image: Slide1,
     subtitle: "// We Create Leading Digital Products",
     title: "END TO END\nDEVELOPMENT", // Added \n for line break
-    description: "We are 100+ professional software engineers with more than 10 years of experience in delivering superior products.",
+    description:
+      "We are 100+ professional software engineers with more than 10 years of experience in delivering superior products.",
     animation: "fromTop",
   },
   {
     image: Slide2,
     subtitle: "// Only High-Quality Services",
     title: "SOFTWARE IT &\nOUTSOURCING", // Added \n for line break
-    description: "We are 100+ professional software engineers with more than 10 years of experience in delivering superior products.",
+    description:
+      "We are 100+ professional software engineers with more than 10 years of experience in delivering superior products.",
     animation: "fromLeft",
   },
   {
     image: Slide1,
     subtitle: "// Full Cycle Software Development",
     title: "FROM IDEA TO\nPRODUCT", // Added \n for line break
-    description: "We are 100+ professional software engineers with more than 10 years of experience in delivering superior products.",
+    description:
+      "We are 100+ professional software engineers with more than 10 years of experience in delivering superior products.",
     animation: "fromBottom",
   },
 ];
@@ -86,7 +89,8 @@ const HeroSlider = () => {
   }, [currentIndex]);
 
   const getAnimationClasses = (animationType) => {
-    const baseClasses = "transition-all duration-700 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0";
+    const baseClasses =
+      "transition-all duration-700 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0";
 
     switch (animationType) {
       case "fromTop":

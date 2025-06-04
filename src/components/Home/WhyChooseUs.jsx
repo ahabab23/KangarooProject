@@ -36,7 +36,7 @@ const features = [
 
 const WhyChooseUs = () => {
   return (
-    <section className="bg-[#1B1836] py-8 sm:py-12 lg:py-16 text-white min-h-screen lg:h-170">
+    <section className="bg-[#1B1836] py-8 sm:py-12 lg:py-16 text-white lg:h-155">
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-50">
         <h2 className="text-2xl sm:text-3xl lg:text-3xl font-bold text-center mb-8 sm:mb-10 lg:mb-12">
           Why Choose Us
@@ -71,8 +71,8 @@ const WhyChooseUs = () => {
               {/* Icon in bottom right */}
               <div className="absolute bottom-2 sm:bottom-3 lg:bottom-4 right-2 sm:right-3 lg:right-4 bg-[#443f72] p-2 sm:p-2.5 lg:p-3 rounded transition group-hover:bg-[#1B1836]">
                 <div className="text-sm sm:text-base lg:text-xl text-white">
-                  {React.cloneElement(icon, { 
-                    className: "text-sm sm:text-base lg:text-xl text-white" 
+                  {React.cloneElement(icon, {
+                    className: "text-sm sm:text-base lg:text-xl text-white",
                   })}
                 </div>
               </div>
