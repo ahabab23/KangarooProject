@@ -120,25 +120,27 @@ function PublicSite() {
 // Admin Section Layout
 function AdminSection() {
   const isAuthenticated = localStorage.getItem("token");
+  console.log(isAuthenticated);
 
   return (
     <Routes>
       <Route
-        path="/login"
+        path="/admin/login"
         element={
-          isAuthenticated ? <Navigate to="/admin/dashboard" /> : <Login />
+          isAuthenticated ? <Navigate to="/admin/dashboard/users" /> : <Login />
         }
       />
       <Route
-        path="/dashboard/*"
+        path="/admin/dashboard/*"
         element={
           isAuthenticated ? <DashboardLayout /> : <Navigate to="/admin/login" />
         }
       />
-      <Route path="*" element={<Navigate to="/admin/login" />} />
+      <Route path="/admin/*" element={<Navigate to="/admin/login" />} />
     </Routes>
   );
 }
+
 // Root App
 export default function App() {
   return (
@@ -150,11 +152,5 @@ export default function App() {
 
 function AppRouter() {
   const isAdmin = useIsAdminRoute();
-  return isAdmin ? (
-    <Routes>
-      <Route path="/admin/*" element={<AdminSection />} />
-    </Routes>
-  ) : (
-    <PublicSite />
-  );
+  return isAdmin ? <AdminSection /> : <PublicSite />;
 }

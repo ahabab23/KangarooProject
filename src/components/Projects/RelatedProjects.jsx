@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { getNumericId, findStringId } from "../../utils/projectIds";
-import { Link } from "lucide-react";
 
 const RelatedProjects = ({ currentProjectId, maxItems = 3 }) => {
   const [projectsData, setProjectsData] = useState([]);
@@ -9,7 +8,9 @@ const RelatedProjects = ({ currentProjectId, maxItems = 3 }) => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/api/posts");
+        const response = await fetch(
+          "https://kangaroobackend.onrender.com/api/posts"
+        );
         const data = await response.json();
         setProjectsData(data);
         setLoading(false);
@@ -61,9 +62,9 @@ const RelatedProjects = ({ currentProjectId, maxItems = 3 }) => {
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-8xl mx-auto">
         {relatedProjects.map((project) => (
-          <Link
+          <a
             key={project.id}
-            to={`/${findStringId(project.id)}`}
+            href={`/${findStringId(project.id)}`}
             className="group relative shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500 overflow-hidden min-h-[250px] sm:min-h-[300px] flex flex-col justify-between"
           >
             {/* Background Image */}
@@ -100,7 +101,7 @@ const RelatedProjects = ({ currentProjectId, maxItems = 3 }) => {
                 {project.client || project.category}
               </p>
             </div>
-          </Link>
+          </a>
         ))}
       </div>
     </div>
