@@ -1,14 +1,12 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/admin(.*)",
-      "dest": "/index.html",
-      "status": 200
+      "source": "/admin/:path*",
+      "destination": "/"
     },
     {
-      "src": "/(.*)",
-      "dest": "/index.html",
-      "status": 200
+      "source": "/:path*",
+      "destination": "/"
     }
   ]
 }
