@@ -51,12 +51,9 @@ export default function PostsPage() {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const resp = await axios.get(
-        "https://kangaroobackend.onrender.com/api/posts",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const resp = await axios.get("http://127.0.0.1:5000/api/posts", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setPosts(resp.data);
     } catch (err) {
       console.error("Failed to fetch posts:", err);
@@ -183,19 +180,15 @@ export default function PostsPage() {
       // Make API request
       if (editing) {
         await axios.put(
-          `https://kangaroobackend.onrender.com/api/posts/${editing.id}`,
+          `http://127.0.0.1:5000/api/posts/${editing.id}`,
           postData,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         toast.success("Post updated successfully");
       } else {
-        await axios.post(
-          "https://kangaroobackend.onrender.com/api/posts",
-          postData,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        await axios.post("http://127.0.0.1:5000/api/posts", postData, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         toast.success("Post created successfully");
       }
 
@@ -233,12 +226,9 @@ export default function PostsPage() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(
-        `https://kangaroobackend.onrender.com/api/posts/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.delete(`http://127.0.0.1:5000/api/posts/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       toast.success("Post deleted successfully");
       fetchPosts();
     } catch (err) {

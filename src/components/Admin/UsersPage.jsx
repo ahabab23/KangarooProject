@@ -35,12 +35,9 @@ export default function UsersPage() {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const resp = await axios.get(
-        "https://kangaroobackend.onrender.com/api/users",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const resp = await axios.get("http://127.0.0.1:5000/api/users", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setUsers(resp.data);
     } catch (err) {
       console.error(err);
@@ -110,20 +107,16 @@ export default function UsersPage() {
       if (editing) {
         // Update existing user
         await axios.put(
-          `https://kangaroobackend.onrender.com/api/users/${editing.id}`,
+          `http://127.0.0.1:5000/api/users/${editing.id}`,
           formData,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         toast.success("User updated successfully");
       } else {
         // Create new user
-        await axios.post(
-          "https://kangaroobackend.onrender.com/api/users",
-          formData,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        await axios.post("http://127.0.0.1:5000/api/users", formData, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         toast.success("User created successfully");
       }
       setShowModal(false);
@@ -150,12 +143,9 @@ export default function UsersPage() {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(
-        `https://kangaroobackend.onrender.com/api/users/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.delete(`http://127.0.0.1:5000/api/users/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       toast.success("User deleted");
       fetchUsers();
     } catch (err) {

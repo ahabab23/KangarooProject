@@ -1,16 +1,24 @@
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
-import bgHeader from "../Assets/bg-pheader.jpg";
+import bgHeader from "../../Assets/bg-pheader.jpg";
 import { BiSolidRightArrow } from "react-icons/bi";
 
-function PageTitle() {
+function PageTitleByName() {
   const location = useLocation();
+
+  // Extract name from query string
+  const getNameFromQuery = () => {
+    const searchParams = new URLSearchParams(location.search);
+    const name = searchParams.get("name");
+    return name ? decodeURIComponent(name) : null;
+  };
+
+  const dynamicTitle = getNameFromQuery();
 
   // Custom title formatting for specific pages
   const formatTitle = (title) => {
     if (!title) return title;
 
-    // Special cases with custom formatting
     if (title === "STRATEGY DEVELOPMENT & EXECUTION") {
       return (
         <div className="flex flex-col space-y-1 leading-tight">
@@ -29,27 +37,7 @@ function PageTitle() {
       );
     }
 
-    // Default behavior for other titles
     return title;
-  };
-
-  // Extract current page name from path
-  const getPageName = () => {
-    const path = location.pathname.split("/").filter(Boolean).pop();
-    // Custom mapping for specific routes
-    const pageNameMap = {
-      strategy: "STRATEGY DEVELOPMENT & EXECUTION",
-      human: "HUMAN CAPITAL MANAGEMENT",
-      ict: "ICT Consultancy Services",
-      development: "Front and Backend Development",
-      "mission-vision": "OUR MISSION AND VISION",
-      // Add other mappings as needed
-    };
-
-    return (
-      pageNameMap[path] ||
-      (path ? path.replace(/-/g, " ").toUpperCase() : "HOME")
-    );
   };
 
   // Generate breadcrumb path
@@ -83,7 +71,7 @@ function PageTitle() {
       <div className="relative z-10 container mx-auto px-6 flex justify-between items-center">
         {/* Page title on left */}
         <h1 className="sm:text-4xl text-2xl font-bold text-white sm:ml-8 -ml-2">
-          {formatTitle(getPageName())}
+          {formatTitle(dynamicTitle || "PROJECT DETAILS")}
         </h1>
 
         {/* Breadcrumb on right */}
@@ -105,4 +93,4 @@ function PageTitle() {
   );
 }
 
-export default PageTitle;
+export default PageTitleByName;

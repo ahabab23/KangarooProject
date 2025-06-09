@@ -13,7 +13,7 @@ export default function Login() {
     try {
       // Replace with your actual login endpoint
       const response = await axios.post(
-        "https://kangaroobackend.onrender.com/api/auth/login",
+        "http://127.0.0.1:5000/api/auth/login",
         { email, password }
       );
       localStorage.setItem("token", response.data.token);
