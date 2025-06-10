@@ -73,7 +73,7 @@ const Header = () => {
               <FaInstagram />
             </a>
           </div>
-          <div className="flex space-x-6 text-sm">
+          <div className="flex items-center space-x-6 text-sm ml-auto">
             <a
               href="tel:+254725534553"
               className="flex items-center space-x-1 hover:text-blue-400 border-r pr-4 pt-0.5 border-gray-500 border-l pl-4"
@@ -88,13 +88,24 @@ const Header = () => {
               <FaEnvelope />
               <span>info@kangarosolutions.com</span>
             </a>
+            <div className="flex items-center">
+              <span className="mr-1">
+                We are creative, ambitious and ready for challenges!
+              </span>
+              <Link
+                to={"/contact"}
+                className="text-blue-400 hover:text-blue-300 transition-colors duration-300"
+              >
+                Hire Us
+              </Link>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Main Navigation - Modified for mobile responsiveness */}
       <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-14 py-4 md:py-6 h-16 md:h-25 font-bold">
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-14 py-4 md:py-6 h-16 md:h-25 font-bold ">
           {/* Logo */}
           <a href="#">
             <img src={logo} alt="Kangaroo Solutions" className="h-8 md:h-12" />
@@ -306,13 +317,13 @@ const Header = () => {
             <Link
               to="/projects"
               className={`hover:text-blue-600 transition relative ${
-                isActive("/our-projects-portfolio") ? "text-blue-600" : ""
-              }`}
+                isActive("/projects") ? "text-blue-600" : ""
+              } `}
             >
               Our Projects
               <span
                 className={`absolute -bottom-8 left-0 w-full h-0.5 bg-blue-600 transition-all duration-500 ${
-                  isActive("/our-projects-portfolio")
+                  isActive("/projects")
                     ? "scale-x-100"
                     : "scale-x-0 hover:scale-x-100"
                 }`}

@@ -5,11 +5,17 @@ import {
   FaFileAlt,
   FaAddressBook,
   FaSignOutAlt,
+  FaPeopleCarry,
+  FaImages,
+  FaEye,
 } from "react-icons/fa";
 
 import UsersPage from "./UsersPage";
 import PostsPage from "./PostsPage";
 import ContactsPage from "./ContactsPage";
+import TeamPage from "./TeamPage";
+import HeadersPage from "./HeaderPage";
+import MissionVisionPage from "./MissionVisionPage";
 import logo from "./WhatsApp-Image-2023-03-04-at-07.20.271.jpeg";
 import { useNavigate } from "react-router-dom";
 
@@ -68,6 +74,33 @@ export default function DashboardLayout() {
                 <span className="font-medium">Contacts</span>
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/admin/dashboard/team"
+                className={({ isActive }) => linkClasses(isActive)}
+              >
+                <FaPeopleCarry className="h-8 w-8 mr-3 text-lg" />
+                <span className="font-medium">Team</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/admin/dashboard/headers"
+                className={({ isActive }) => linkClasses(isActive)}
+              >
+                <FaImages className="h-8 w-8 mr-3 text-lg" />
+                <span className="font-medium">Header</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/admin/dashboard/mission-vision"
+                className={({ isActive }) => linkClasses(isActive)}
+              >
+                <FaEye className="h-8 w-8 mr-3 text-lg" />
+                <span className="font-medium">Mission & Vision</span>
+              </NavLink>
+            </li>
           </ul>
         </nav>
 
@@ -84,31 +117,14 @@ export default function DashboardLayout() {
 
       {/* RIGHT CONTENT */}
       <main className="flex-1 p-8 overflow-auto">
-        {/* SECTION HEADER */}
-        {/* <div className="mb-6">
-          <Routes>
-            <Route
-              path="users"
-              element={<h1 className="text-3xl font-bold">Users</h1>}
-            />
-            <Route
-              path="posts"
-              element={<h1 className="text-3xl font-bold">Posts</h1>}
-            />
-            <Route
-              path="contacts"
-              element={<h1 className="text-3xl font-bold">Contacts</h1>}
-            />
-            <Route path="*" element={<Navigate to="users" />} />
-          </Routes>
-        </div> */}
-
-        {/* PAGE CONTENT */}
         <div className="bg-white rounded-lg shadow p-6">
           <Routes>
             <Route path="users" element={<UsersPage />} />
             <Route path="posts" element={<PostsPage />} />
             <Route path="contacts" element={<ContactsPage />} />
+            <Route path="team" element={<TeamPage />} />
+            <Route path="headers" element={<HeadersPage />} />
+            <Route path="mission-vision" element={<MissionVisionPage />} />
             <Route path="*" element={<Navigate to="users" />} />
           </Routes>
         </div>

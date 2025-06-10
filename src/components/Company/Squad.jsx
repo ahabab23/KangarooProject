@@ -189,9 +189,14 @@ function Squad() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-5">
             Our Leadership Team
           </h2>
+          <h3>
+            Meet the leadership team from KSL that help Government agencies and
+            private businesses elevate their value through custom software
+            development, product design, QA and consultancy services.
+          </h3>
         </div>
 
         {/* Cards Grid */}

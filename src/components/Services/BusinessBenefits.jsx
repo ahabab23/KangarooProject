@@ -1,7 +1,23 @@
 import React from "react";
 import bgPattern from "../../Assets/bg-art-1.png";
 import Watch from "../../Assets/app-watch-1.jpg";
-import laptop from "../../Assets/laptop.png";
+
+// Custom Flaticon Icon Component
+const FlaticonIcon = ({ iconCode, className = "" }) => (
+  <i
+    className={`flaticon-icon ${className}`}
+    style={{
+      fontStyle: "normal",
+      fontWeight: "normal",
+      fontVariant: "normal",
+      textTransform: "none",
+      lineHeight: 1,
+      WebkitFontSmoothing: "antialiased",
+    }}
+  >
+    {String.fromCodePoint(parseInt(iconCode.substring(1), 16))}
+  </i>
+);
 
 function BusinessBenefits() {
   return (
@@ -48,7 +64,10 @@ function BusinessBenefits() {
                   Software as a Service
                 </h3>
                 <div className="bg-purple-100 p-2 rounded-lg">
-                  <img src={laptop} alt="SaaS icon" className="w-6 h-6" />
+                  <FlaticonIcon
+                    iconCode="\f135"
+                    className="text-purple-600 text-xl"
+                  />
                 </div>
               </div>
               <p className="text-gray-600 text-m mr-14 leading-8">
@@ -65,10 +84,9 @@ function BusinessBenefits() {
                   Internet of Things
                 </h3>
                 <div className="bg-purple-100 p-2 rounded-lg">
-                  <img
-                    src="/api/placeholder/24/24"
-                    alt="SaaS icon"
-                    className="w-6 h-6"
+                  <FlaticonIcon
+                    iconCode="\f136"
+                    className="text-purple-600 text-xl"
                   />
                 </div>
               </div>
@@ -86,10 +104,9 @@ function BusinessBenefits() {
                   Android and IOS Apps
                 </h3>
                 <div className="bg-purple-100 p-2 rounded-lg">
-                  <img
-                    src="/api/placeholder/24/24"
-                    alt="SaaS icon"
-                    className="w-6 h-6"
+                  <FlaticonIcon
+                    iconCode="\f137"
+                    className="text-purple-600 text-xl"
                   />
                 </div>
               </div>
@@ -103,10 +120,9 @@ function BusinessBenefits() {
             <div className="absolute right-28 -top-120 max-w-xs text-left">
               <div className="flex items-start space-x-4 mb-2 justify-end mr-28">
                 <div className="bg-purple-100 p-2 rounded-lg">
-                  <img
-                    src="/api/placeholder/24/24"
-                    alt="Social media icon"
-                    className="w-6 h-6"
+                  <FlaticonIcon
+                    iconCode="\f138"
+                    className="text-purple-600 text-xl"
                   />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">
@@ -116,7 +132,7 @@ function BusinessBenefits() {
               <p className="text-gray-600 text-m ml-20 leading-8">
                 80% of time users spend in social
                 <br />
-                mediafrom their mobile devices.
+                media from their mobile devices.
               </p>
             </div>
 
@@ -124,10 +140,9 @@ function BusinessBenefits() {
             <div className="absolute right-12 -top-80 max-w-sm text-right">
               <div className="flex items-start space-x-4 mb-2 justify-end mr-10">
                 <div className="bg-purple-100 p-2 rounded-lg">
-                  <img
-                    src="/api/placeholder/24/24"
-                    alt="Social media icon"
-                    className="w-6 h-6"
+                  <FlaticonIcon
+                    iconCode="\f139"
+                    className="text-purple-600 text-xl"
                   />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">
@@ -145,10 +160,9 @@ function BusinessBenefits() {
             <div className="absolute right-28 -top-40 max-w-xs text-left">
               <div className="flex items-start space-x-4 mb-2 justify-end mr-20">
                 <div className="bg-purple-100 p-2 rounded-lg">
-                  <img
-                    src="/api/placeholder/24/24"
-                    alt="Social media icon"
-                    className="w-6 h-6"
+                  <FlaticonIcon
+                    iconCode="\f140"
+                    className="text-purple-600 text-xl"
                   />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">
@@ -169,10 +183,9 @@ function BusinessBenefits() {
             <div className="text-center">
               <div className="flex items-center justify-center space-x-4 mb-4">
                 <div className="bg-purple-100 p-2 rounded-lg">
-                  <img
-                    src="/api/placeholder/24/24"
-                    alt="SaaS icon"
-                    className="w-6 h-6"
+                  <FlaticonIcon
+                    iconCode="\f135"
+                    className="text-purple-600 text-xl"
                   />
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900">
@@ -189,10 +202,9 @@ function BusinessBenefits() {
             <div className="text-center">
               <div className="flex items-center justify-center space-x-4 mb-4">
                 <div className="bg-purple-100 p-2 rounded-lg">
-                  <img
-                    src="/api/placeholder/24/24"
-                    alt="IoT icon"
-                    className="w-6 h-6"
+                  <FlaticonIcon
+                    iconCode="\f136"
+                    className="text-purple-600 text-xl"
                   />
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900">
@@ -209,10 +221,9 @@ function BusinessBenefits() {
             <div className="text-center">
               <div className="flex items-center justify-center space-x-4 mb-4">
                 <div className="bg-purple-100 p-2 rounded-lg">
-                  <img
-                    src="/api/placeholder/24/24"
-                    alt="Mobile apps icon"
-                    className="w-6 h-6"
+                  <FlaticonIcon
+                    iconCode="\f137"
+                    className="text-purple-600 text-xl"
                   />
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900">
@@ -229,10 +240,9 @@ function BusinessBenefits() {
             <div className="text-center">
               <div className="flex items-center justify-center space-x-4 mb-4">
                 <div className="bg-purple-100 p-2 rounded-lg">
-                  <img
-                    src="/api/placeholder/24/24"
-                    alt="Social media icon"
-                    className="w-6 h-6"
+                  <FlaticonIcon
+                    iconCode="\f138"
+                    className="text-purple-600 text-xl"
                   />
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900">
@@ -249,10 +259,9 @@ function BusinessBenefits() {
             <div className="text-center">
               <div className="flex items-center justify-center space-x-4 mb-4">
                 <div className="bg-purple-100 p-2 rounded-lg">
-                  <img
-                    src="/api/placeholder/24/24"
-                    alt="Business management icon"
-                    className="w-6 h-6"
+                  <FlaticonIcon
+                    iconCode="\f139"
+                    className="text-purple-600 text-xl"
                   />
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900">
@@ -269,10 +278,9 @@ function BusinessBenefits() {
             <div className="text-center">
               <div className="flex items-center justify-center space-x-4 mb-4">
                 <div className="bg-purple-100 p-2 rounded-lg">
-                  <img
-                    src="/api/placeholder/24/24"
-                    alt="Accounting apps icon"
-                    className="w-6 h-6"
+                  <FlaticonIcon
+                    iconCode="\f140"
+                    className="text-purple-600 text-xl"
                   />
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900">

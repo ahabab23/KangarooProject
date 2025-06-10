@@ -32,9 +32,8 @@ export default function PostsPage() {
     description: "",
     published: "",
     category: "",
-    client: "",
     image_url: "",
-    status: "Active",
+    status: "Pending",
   };
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState({});
@@ -72,8 +71,7 @@ export default function PostsPage() {
     const lower = searchTerm.toLowerCase();
     return (
       p.title?.toLowerCase().includes(lower) ||
-      p.category?.toLowerCase().includes(lower) ||
-      p.client?.toLowerCase().includes(lower)
+      p.category?.toLowerCase().includes(lower)
     );
   });
 
@@ -142,7 +140,6 @@ export default function PostsPage() {
     if (!formData.description.trim())
       errs.description = "Description is required";
     if (!formData.category.trim()) errs.category = "Category is required";
-    if (!formData.client.trim()) errs.client = "Client is required";
     if (!imageFile && !formData.image_url) errs.image = "Image is required";
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -175,6 +172,8 @@ export default function PostsPage() {
       const postData = {
         ...formData,
         image_url: imageUrl,
+        // Published date is handled as formatted string
+        published: formData.published,
       };
 
       // Make API request
@@ -210,10 +209,10 @@ export default function PostsPage() {
     setFormData({
       title: post.title,
       description: post.description,
-      published: post.published,
+      published: post.published || "", // Use formatted string directly
       category: post.category,
-      client: post.client,
       image_url: post.image_url,
+      status: post.status || "Pending",
     });
     setImageFile(null);
     setImagePreview(post.image_url);
@@ -274,7 +273,7 @@ export default function PostsPage() {
         <table className="min-w-full bg-white shadow rounded">
           <thead className="bg-white">
             <tr>
-              {["ID", "Title", "Category", "Client", "Actions"].map((col) => (
+              {["ID", "Title", "Category", "Status", "Actions"].map((col) => (
                 <th
                   key={col}
                   className="px-4 py-2 text-left text-sm font-bold text-blue-600"
@@ -294,7 +293,7 @@ export default function PostsPage() {
           <tbody className="bg-white divide-y divide-gray-100">
             {loading ? (
               <tr>
-                <td colSpan={7} className="px-4 py-6 text-center">
+                <td colSpan={5} className="px-4 py-6 text-center">
                   <div className="flex justify-center">
                     <FaSpinner className="animate-spin text-purple-600 text-2xl" />
                   </div>
@@ -313,11 +312,16 @@ export default function PostsPage() {
                     {post.category}
                   </td>
                   <td className="px-4 py-2 border text-sm text-gray-700">
-                    {post.client}
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs ${
+                        post.status === "Active"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-yellow-100 text-yellow-800"
+                      }`}
+                    >
+                      {post.status}
+                    </span>
                   </td>
-                  {/* <td className="px-4 py-2 border text-sm text-gray-700">
-                    {post.published}
-                  </td> */}
 
                   <td className="px-4 py-2 border space-x-2">
                     <button
@@ -338,7 +342,7 @@ export default function PostsPage() {
             ) : (
               <tr>
                 <td
-                  colSpan={7}
+                  colSpan={5}
                   className="px-4 py-4 text-center text-gray-500 italic"
                 >
                   {searchTerm
@@ -476,15 +480,33 @@ export default function PostsPage() {
                       disabled={isSubmitting}
                     />
 
-                    {/* Client */}
-                    <FormInput
-                      label="Client"
-                      name="client"
-                      value={formData.client}
-                      onChange={handleFormChange}
-                      error={errors.client}
-                      disabled={isSubmitting}
-                    />
+                    {/* Status */}
+                    <div>
+                      <label className="block text-gray-700 font-medium mb-1.5">
+                        Status <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        name="status"
+                        value={formData.status}
+                        onChange={handleFormChange}
+                        disabled={isSubmitting}
+                        className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none transition-colors text-sm ${
+                          errors.status
+                            ? "border-red-400 focus:ring-2 focus:ring-red-200"
+                            : "border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-100"
+                        }`}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Ongoing">Ongoing</option>
+                        <option value="Completed">Completed</option>
+                      </select>
+                      {errors.status && (
+                        <p className="text-red-500 text-sm mt-1.5 flex items-center">
+                          <FaExclamationCircle className="mr-1.5" />{" "}
+                          {errors.status}
+                        </p>
+                      )}
+                    </div>
                   </div>
 
                   {/* Published toggle */}
@@ -638,8 +660,9 @@ const FormTextarea = ({ label, name, value, onChange, error, disabled }) => (
 
 // Converts "June 18, 2019" => "2019-06-18" (date input format)
 function formattedToDateInput(formatted) {
+  if (!formatted) return "";
   const date = new Date(formatted);
-  if (isNaN(date)) return "";
+  if (isNaN(date.getTime())) return "";
   // Format as YYYY-MM-DD with leading zeros
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -651,7 +674,7 @@ function formattedToDateInput(formatted) {
 function dateInputToFormatted(dateInput) {
   if (!dateInput) return "";
   const date = new Date(dateInput);
-  if (isNaN(date)) return "";
+  if (isNaN(date.getTime())) return "";
   return date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",

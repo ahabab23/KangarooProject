@@ -19,7 +19,7 @@ export default function UsersPage() {
   const initialForm = {
     full_name: "",
     email_address: "",
-    telefone_number: "",
+    telephone_number: "",
     password: "",
     role: "Admin",
   };
@@ -54,7 +54,7 @@ export default function UsersPage() {
     return (
       u.full_name.toLowerCase().includes(lower) ||
       u.email_address.toLowerCase().includes(lower) ||
-      u.telefone_number.toLowerCase().includes(lower) ||
+      u.telephone_number.toLowerCase().includes(lower) ||
       u.role.toLowerCase().includes(lower)
     );
   });
@@ -89,8 +89,8 @@ export default function UsersPage() {
     if (!formData.full_name.trim()) errs.full_name = "Full name is required";
     if (!formData.email_address.trim())
       errs.email_address = "Email is required";
-    if (!formData.telefone_number.trim())
-      errs.telefone_number = "Telefone is required";
+    if (!formData.telephone_number.trim())
+      errs.telephone_number = "Telefone is required";
     if (!editing && !formData.password.trim())
       errs.password = "Password is required";
     if (!formData.role.trim()) errs.role = "Role is required";
@@ -132,7 +132,7 @@ export default function UsersPage() {
     setFormData({
       full_name: user.full_name,
       email_address: user.email_address,
-      telefone_number: user.telefone_number,
+      telephone_number: user.telephone_number,
       password: "",
       role: user.role,
     });
@@ -191,16 +191,21 @@ export default function UsersPage() {
         <table className="min-w-full bg-white shadow rounded">
           <thead className="bg-white">
             <tr>
-              {["ID", "Full Name", "Email", "Telefone", "Role", "Actions"].map(
-                (col) => (
-                  <th
-                    key={col}
-                    className="px-4 py-2 text-left text-sm font-bold text-blue-600"
-                  >
-                    {col}
-                  </th>
-                )
-              )}
+              {[
+                "ID",
+                "Full Name",
+                "Email",
+                "Telephone Number",
+                "Role",
+                "Actions",
+              ].map((col) => (
+                <th
+                  key={col}
+                  className="px-4 py-2 text-left text-sm font-bold text-blue-600"
+                >
+                  {col}
+                </th>
+              ))}
             </tr>
             {/* Pink Underline */}
             <tr>
@@ -224,7 +229,7 @@ export default function UsersPage() {
                     {user.email_address}
                   </td>
                   <td className="px-4 py-2 border text-sm text-gray-700">
-                    {user.telefone_number}
+                    {user.telephone_number}
                   </td>
                   <td className="px-4 py-2 border text-sm text-gray-700">
                     {user.role}
@@ -380,19 +385,19 @@ export default function UsersPage() {
                 </label>
                 <input
                   type="text"
-                  name="telefone_number"
-                  value={formData.telefone_number}
+                  name="telephone_number"
+                  value={formData.telephone_number}
                   onChange={handleFormChange}
                   placeholder="+1 234 567 8900"
                   className={`w-full px-4 py-2 border rounded-lg text-sm focus:outline-none transition ${
-                    errors.telefone_number
+                    errors.telephone_number
                       ? "border-red-500 focus:ring-red-500"
                       : "border-gray-300 focus:ring-2 focus:ring-purple-500"
                   }`}
                 />
-                {errors.telefone_number && (
+                {errors.telephone_number && (
                   <p className="text-red-500 text-xs mt-1">
-                    {errors.telefone_number}
+                    {errors.telephone_number}
                   </p>
                 )}
               </div>
@@ -440,8 +445,8 @@ export default function UsersPage() {
                 >
                   <option value="">Select role</option>
                   <option>Admin</option>
-                  <option>Manager</option>
-                  <option>Director</option>
+                  <option>Publisher</option>
+                  <option>Content_Creator</option>
                 </select>
                 {errors.role && (
                   <p className="text-red-500 text-xs mt-1">{errors.role}</p>

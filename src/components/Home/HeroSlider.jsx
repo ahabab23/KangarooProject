@@ -100,7 +100,7 @@ const HeroSlider = () => {
             backgroundPosition: "center",
           }}
         >
-          <div className="h-full w-full bg-black/30 flex items-center px-8 md:px-20">
+          <div className="h-full w-full bg-black/30 px-8 flex items-center  md:px-50">
             <motion.div
               className="text-white max-w-xl"
               variants={textVariants}
@@ -112,12 +112,12 @@ const HeroSlider = () => {
                 className="text-lg md:text-xl font-light mb-3"
                 variants={textVariants}
               >
-                {slides[currentIndex].subtitle}
+                // {slides[currentIndex].subtitle}
               </motion.h3>
 
               {/* Title with preserved spacing and line breaks */}
               <motion.h1
-                className="text-3xl md:text-5xl font-bold leading-tight whitespace-pre-line"
+                className="text-3xl md:text-7xl font-bold leading-tight whitespace-pre-line"
                 variants={textVariants}
               >
                 {slides[currentIndex].title}

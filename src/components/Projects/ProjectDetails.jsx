@@ -161,32 +161,13 @@ const ProjectDetails = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    Project Overview
+                    Project Description
                   </h2>
                   <p className="text-lg leading-relaxed text-gray-700 bg-blue-50 p-5 rounded-xl border border-blue-100">
                     {project.description}
                   </p>
                 </div>
               )}
-
-              {/* Project Content */}
-              <div className="mb-10">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 mr-2 text-blue-600"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-                  </svg>
-                  Project Details
-                </h2>
-                <div
-                  className="prose prose-lg max-w-none border-t border-gray-100 pt-6 text-gray-700"
-                  dangerouslySetInnerHTML={{ __html: project.content }}
-                />
-              </div>
 
               {/* Project Meta */}
               <div className="bg-gray-50 p-5 rounded-xl border border-gray-200">
