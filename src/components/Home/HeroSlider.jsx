@@ -22,7 +22,9 @@ const HeroSlider = () => {
   useEffect(() => {
     const fetchSlides = async () => {
       try {
-        const res = await axios.get("http://127.0.0.1:5000/api/headers");
+        const res = await axios.get(
+          "https://kangaroobackend.onrender.com/api/headers"
+        );
         const data = res.data;
 
         const formatted = data.map((slide) => ({

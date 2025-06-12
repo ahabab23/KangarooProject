@@ -159,7 +159,9 @@ function Squad() {
   useEffect(() => {
     const fetchTeamData = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:5000/api/team");
+        const response = await axios.get(
+          "https://kangaroobackend.onrender.com/api/team"
+        );
         setTeam(response.data);
         setLoading(false);
       } catch (error) {

@@ -22,7 +22,9 @@ export default function HeaderPage() {
 
   const fetchHeaders = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:5000/api/headers");
+      const res = await axios.get(
+        "https://kangaroobackend.onrender.com/api/headers"
+      );
       setHeaders(res.data);
     } catch (err) {
       toast.error("Failed to load headers");
@@ -61,7 +63,7 @@ export default function HeaderPage() {
     try {
       if (editing) {
         await axios.put(
-          `http://127.0.0.1:5000/api/headers/${editing.id}`,
+          `https://kangaroobackend.onrender.com/api/headers/${editing.id}`,
           formData,
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -69,9 +71,13 @@ export default function HeaderPage() {
         );
         toast.success("Header updated");
       } else {
-        await axios.post("http://127.0.0.1:5000/api/headers", formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await axios.post(
+          "https://kangaroobackend.onrender.com/api/headers",
+          formData,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         toast.success("Header created");
       }
       fetchHeaders();
@@ -84,9 +90,12 @@ export default function HeaderPage() {
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`http://127.0.0.1:5000/api/headers/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `https://kangaroobackend.onrender.com/api/headers/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       toast.success("Header deleted");
       fetchHeaders();
     } catch (err) {

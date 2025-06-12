@@ -15,9 +15,12 @@ export default function ContactsPage() {
   const fetchContacts = async () => {
     try {
       const token = localStorage.getItem("token");
-      const resp = await axios.get("http://127.0.0.1:5000/api/contacts", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const resp = await axios.get(
+        "https://kangaroobackend.onrender.com/api/contacts",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setContacts(resp.data);
     } catch (err) {
       console.error(err);

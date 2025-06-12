@@ -16,7 +16,7 @@
 
 //   const fetchData = async () => {
 //     try {
-//       const res = await axios.get("http://127.0.0.1:5000/api/mission-vision");
+//       const res = await axios.get("https://kangaroobackend.onrender.com/api/mission-vision");
 //       setData(res.data);
 //     } catch (err) {
 //       console.error(err);
@@ -68,7 +68,7 @@
 //     e.preventDefault();
 //     try {
 //       const token = localStorage.getItem("token");
-//       await axios.put("http://127.0.0.1:5000/api/mission-vision", formData, {
+//       await axios.put("https://kangaroobackend.onrender.com/api/mission-vision", formData, {
 //         headers: { Authorization: `Bearer ${token}` },
 //       });
 //       toast.success("Updated successfully");
@@ -244,7 +244,9 @@ export default function MissionVisionPage() {
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.get("http://127.0.0.1:5000/api/mission-vision");
+      const res = await axios.get(
+        "https://kangaroobackend.onrender.com/api/mission-vision"
+      );
       setData(res.data);
     } catch (err) {
       console.error(err);
@@ -299,9 +301,13 @@ export default function MissionVisionPage() {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await axios.put("http://127.0.0.1:5000/api/mission-vision", formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.put(
+        "https://kangaroobackend.onrender.com/api/mission-vision",
+        formData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       toast.success("Updated successfully");
       fetchData();
       closeModal();

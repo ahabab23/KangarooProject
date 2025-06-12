@@ -22,17 +22,20 @@ const ContactForm = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/contacts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email_address: formData.email,
-          message: formData.message,
-        }),
-      });
+      const response = await fetch(
+        "https://kangaroobackend.onrender.com/api/contacts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email_address: formData.email,
+            message: formData.message,
+          }),
+        }
+      );
 
       if (response.ok) {
         setSubmitStatus("success");

@@ -12,7 +12,7 @@ const ProjectDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:5000/api/posts/${id}`)
+      .get(`https://kangaroobackend.onrender.com/api/posts/${id}`)
       .then((res) => {
         setProject(res.data);
         setError(null);

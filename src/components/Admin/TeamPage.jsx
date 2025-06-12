@@ -23,7 +23,9 @@ export default function TeamPage() {
 
   const fetchTeam = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:5000/api/team");
+      const res = await axios.get(
+        "https://kangaroobackend.onrender.com/api/team"
+      );
       setTeam(res.data);
     } catch (err) {
       console.error(err);
@@ -76,7 +78,7 @@ export default function TeamPage() {
     try {
       if (editing) {
         await axios.put(
-          `http://127.0.0.1:5000/api/team/${editing.id}`,
+          `https://kangaroobackend.onrender.com/api/team/${editing.id}`,
           payload,
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -84,9 +86,13 @@ export default function TeamPage() {
         );
         toast.success("Team member updated");
       } else {
-        await axios.post("http://127.0.0.1:5000/api/team", payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await axios.post(
+          "https://kangaroobackend.onrender.com/api/team",
+          payload,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         toast.success("Team member created");
       }
       fetchTeam();
@@ -110,9 +116,12 @@ export default function TeamPage() {
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`http://127.0.0.1:5000/api/team/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `https://kangaroobackend.onrender.com/api/team/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       toast.success("Deleted");
       fetchTeam();
     } catch (err) {
