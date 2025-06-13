@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FaSearch, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import {
+  FaSearch,
+  FaChevronLeft,
+  FaChevronRight,
+  FaSpinner,
+} from "react-icons/fa"; // Added FaSpinner
 
 export default function ContactsPage() {
   // -------------- STATE --------------
   const [contacts, setContacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true); // Added loading state
 
   // Pagination state:
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,6 +30,8 @@ export default function ContactsPage() {
       setContacts(resp.data);
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false); // Always set loading to false after fetch
     }
   };
 
@@ -94,7 +102,17 @@ export default function ContactsPage() {
           </thead>
 
           <tbody className="bg-white divide-y divide-gray-100">
-            {currentContacts.length > 0 ? (
+            {/* Loading Spinner */}
+            {loading ? (
+              <tr>
+                <td colSpan={5} className="px-4 py-6 text-center">
+                  <div className="flex justify-center">
+                    <FaSpinner className="animate-spin text-purple-600 text-2xl" />
+                  </div>
+                </td>
+              </tr>
+            ) : currentContacts.length > 0 ? (
+              // Data Rows
               currentContacts.map((c) => (
                 <tr key={c.id} className="hover:bg-gray-50">
                   <td className="px-4 py-2 border text-sm text-gray-700">
@@ -115,6 +133,7 @@ export default function ContactsPage() {
                 </tr>
               ))
             ) : (
+              // Empty State
               <tr>
                 <td
                   colSpan={5}
@@ -128,52 +147,54 @@ export default function ContactsPage() {
         </table>
       </div>
 
-      {/* Pagination */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-sm text-gray-700">
-        <div>
-          Showing {totalItems === 0 ? 0 : startIndex + 1} to {endIndex} of{" "}
-          {totalItems} entries
-        </div>
-        <div className="flex items-center space-x-1">
-          <button
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
-            className={`p-2 rounded-md ${
-              currentPage === 1
-                ? "text-gray-400 cursor-not-allowed"
-                : "text-gray-700 hover:bg-gray-100"
-            }`}
-          >
-            <FaChevronLeft />
-          </button>
-
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+      {/* Pagination - Only show when not loading */}
+      {!loading && (
+        <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-sm text-gray-700">
+          <div>
+            Showing {totalItems === 0 ? 0 : startIndex + 1} to {endIndex} of{" "}
+            {totalItems} entries
+          </div>
+          <div className="flex items-center space-x-1">
             <button
-              key={num}
-              onClick={() => setCurrentPage(num)}
-              className={`px-3 py-1 rounded-lg transition ${
-                num === currentPage
-                  ? "bg-purple-600 text-white"
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className={`p-2 rounded-md ${
+                currentPage === 1
+                  ? "text-gray-400 cursor-not-allowed"
                   : "text-gray-700 hover:bg-gray-100"
               }`}
             >
-              {num}
+              <FaChevronLeft />
             </button>
-          ))}
 
-          <button
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}
-            className={`p-2 rounded-md ${
-              currentPage === totalPages
-                ? "text-gray-400 cursor-not-allowed"
-                : "text-gray-700 hover:bg-gray-100"
-            }`}
-          >
-            <FaChevronRight />
-          </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+              <button
+                key={num}
+                onClick={() => setCurrentPage(num)}
+                className={`px-3 py-1 rounded-lg transition ${
+                  num === currentPage
+                    ? "bg-purple-600 text-white"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`}
+              >
+                {num}
+              </button>
+            ))}
+
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className={`p-2 rounded-md ${
+                currentPage === totalPages
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              <FaChevronRight />
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

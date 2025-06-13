@@ -5,6 +5,7 @@ import {
   FaTimes,
   FaChevronLeft,
   FaChevronRight,
+  FaSpinner, // Added FaSpinner import
 } from "react-icons/fa";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
@@ -13,8 +14,9 @@ export default function UsersPage() {
   // -------------- STATE --------------
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true); // Added loading state
 
-  // “Add/Edit” Modal:
+  // "Add/Edit" Modal:
   const [showModal, setShowModal] = useState(false);
   const initialForm = {
     full_name: "",
@@ -34,6 +36,7 @@ export default function UsersPage() {
   // -------------- FETCH USERS --------------
   const fetchUsers = async () => {
     try {
+      setLoading(true); // Start loading
       const token = localStorage.getItem("token");
       const resp = await axios.get(
         "https://kangaroobackend.onrender.com/api/users",
@@ -44,6 +47,9 @@ export default function UsersPage() {
       setUsers(resp.data);
     } catch (err) {
       console.error(err);
+      toast.error("Failed to load users");
+    } finally {
+      setLoading(false); // Stop loading regardless of success/error
     }
   };
 
@@ -93,7 +99,7 @@ export default function UsersPage() {
     if (!formData.email_address.trim())
       errs.email_address = "Email is required";
     if (!formData.telephone_number.trim())
-      errs.telephone_number = "Telefone is required";
+      errs.telephone_number = "Telephone is required";
     if (!editing && !formData.password.trim())
       errs.password = "Password is required";
     if (!formData.role.trim()) errs.role = "Role is required";
@@ -226,7 +232,15 @@ export default function UsersPage() {
           </thead>
 
           <tbody className="bg-white divide-y divide-gray-100">
-            {currentUsers.length > 0 ? (
+            {loading ? ( // Loading state
+              <tr>
+                <td colSpan={6} className="px-4 py-6 text-center">
+                  <div className="flex justify-center">
+                    <FaSpinner className="animate-spin text-purple-600 text-2xl" />
+                  </div>
+                </td>
+              </tr>
+            ) : currentUsers.length > 0 ? ( // Data loaded with users
               currentUsers.map((user) => (
                 <tr key={user.id} className="hover:bg-gray-50">
                   <td className="px-4 py-2 border text-sm text-gray-700">
@@ -261,6 +275,7 @@ export default function UsersPage() {
                 </tr>
               ))
             ) : (
+              // Data loaded but no users
               <tr>
                 <td
                   colSpan={6}

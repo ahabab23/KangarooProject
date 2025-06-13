@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  FaSearch,
-  FaPlus,
-  FaTimes,
-  FaChevronLeft,
-  FaChevronRight,
-} from "react-icons/fa";
+import { FaPlus, FaTimes, FaSpinner } from "react-icons/fa";
 import { Toaster, toast } from "react-hot-toast";
 
 export default function TeamPage() {
@@ -20,8 +14,10 @@ export default function TeamPage() {
   });
   const [imageFile, setImageFile] = useState(null);
   const [editing, setEditing] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchTeam = async () => {
+    setLoading(true);
     try {
       const res = await axios.get(
         "https://kangaroobackend.onrender.com/api/team"
@@ -30,6 +26,8 @@ export default function TeamPage() {
     } catch (err) {
       console.error(err);
       toast.error("Failed to fetch team");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,7 +54,7 @@ export default function TeamPage() {
     if (!imageFile) return formData.image_url;
     const data = new FormData();
     data.append("file", imageFile);
-    data.append("upload_preset", "kangaroo");
+    data.append("upload_preset", "kangaroo"); // Add your Cloudinary upload preset
     try {
       const res = await axios.post(
         "https://api.cloudinary.com/v1_1/dny9v95td/image/upload",
@@ -125,7 +123,7 @@ export default function TeamPage() {
       toast.success("Deleted");
       fetchTeam();
     } catch (err) {
-      toast.error(`Failed to delete${err.message}`);
+      toast.error(`Failed to delete: ${err.message}`);
     }
   };
 
@@ -165,33 +163,43 @@ export default function TeamPage() {
           </tr>
         </thead>
         <tbody>
-          {filtered.map((member) => (
-            <tr key={member.id} className="hover:bg-gray-50">
-              <td className="py-2 px-4">
-                <img
-                  src={member.image_url}
-                  alt="avatar"
-                  className="w-12 h-12 object-cover rounded-full"
-                />
-              </td>
-              <td className="py-2 px-4">{member.name}</td>
-              <td className="py-2 px-4">{member.position}</td>
-              <td className="py-2 px-4 space-x-2">
-                <button
-                  className="bg-blue-600 text-white px-2 py-1 rounded"
-                  onClick={() => handleEdit(member)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="bg-red-600 text-white px-2 py-1 rounded"
-                  onClick={() => handleDelete(member.id)}
-                >
-                  Delete
-                </button>
+          {loading ? (
+            <tr>
+              <td colSpan={4} className="px-4 py-6 text-center">
+                <div className="flex justify-center">
+                  <FaSpinner className="animate-spin text-purple-600 text-2xl" />
+                </div>
               </td>
             </tr>
-          ))}
+          ) : (
+            filtered.map((member) => (
+              <tr key={member.id} className="hover:bg-gray-50">
+                <td className="py-2 px-4">
+                  <img
+                    src={member.image_url}
+                    alt="avatar"
+                    className="w-12 h-12 object-cover rounded-full"
+                  />
+                </td>
+                <td className="py-2 px-4">{member.name}</td>
+                <td className="py-2 px-4">{member.position}</td>
+                <td className="py-2 px-4 space-x-2">
+                  <button
+                    className="bg-blue-600 text-white px-2 py-1 rounded"
+                    onClick={() => handleEdit(member)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="bg-red-600 text-white px-2 py-1 rounded"
+                    onClick={() => handleDelete(member.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
 
