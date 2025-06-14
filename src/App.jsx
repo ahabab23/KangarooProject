@@ -1,10 +1,10 @@
 // import React from "react";
 // import {
-//   BrowserRouter,
+//   BrowserRouter as Router,
 //   Routes,
 //   Route,
 //   Navigate,
-//   useLocation,
+//   Outlet,
 // } from "react-router-dom";
 
 // // Shared styles
@@ -60,97 +60,16 @@
 //     children
 //   );
 // }
-// // Helper to detect admin route
 
-// function useIsAdminRoute() {
-//   const location = useLocation();
-//   return location.pathname.startsWith("/admin");
-// }
-
-// // Public Site Layout with improved structure
-// function PublicSite() {
+// // Public Layout Component
+// function PublicLayout() {
 //   return (
 //     <div className="min-h-screen flex flex-col bg-gray-50">
 //       <Header />
 //       <main className="flex-grow">
-//         <Routes>
-//           {/* Home */}
-//           <Route path="/" element={<Home />} />
-
-//           {/* Company Routes */}
-//           <Route path="/about-us" element={<AboutUs />} />
-//           <Route path="/mission-vision" element={<MissionVision />} />
-//           <Route path="/why-choose-us" element={<WhyChooseUs />} />
-//           <Route path="/our-team" element={<OurTeam />} />
-
-//           {/* Services Routes */}
-//           <Route path="/services/strategy" element={<Strategy />} />
-//           <Route path="/services/human" element={<Human />} />
-//           <Route path="/services/ict" element={<ICT />} />
-//           <Route path="/services/development" element={<Development />} />
-
-//           {/* Legacy service routes (redirects) */}
-//           <Route
-//             path="/strategy"
-//             element={<Navigate to="/services/strategy" replace />}
-//           />
-//           <Route
-//             path="/human"
-//             element={<Navigate to="/services/human" replace />}
-//           />
-//           <Route
-//             path="/ict"
-//             element={<Navigate to="/services/ict" replace />}
-//           />
-//           <Route
-//             path="/development"
-//             element={<Navigate to="/services/development" replace />}
-//           />
-
-//           {/* Contact */}
-//           <Route path="/contact" element={<Contact />} />
-
-//           {/* Projects */}
-//           <Route path="/projects" element={<Projects />} />
-
-//           <Route path="/projects/:id" element={<ProjectDetails />} />
-
-//           {/* 404 fallback */}
-//           <Route path="*" element={<Navigate to="/" replace />} />
-//         </Routes>
+//         <Outlet />
 //       </main>
 //       <Footer />
-//     </div>
-//   );
-// }
-
-// // Admin Section Layout with improved error handling
-// function AdminSection() {
-//   return (
-//     <div className="min-h-screen bg-gray-100">
-//       <Routes>
-//         <Route
-//           path="/admin/login"
-//           element={
-//             <PublicRoute>
-//               <Login />
-//             </PublicRoute>
-//           }
-//         />
-//         <Route
-//           path="/admin/dashboard/*"
-//           element={
-//             <ProtectedRoute>
-//               <DashboardLayout />
-//             </ProtectedRoute>
-//           }
-//         />
-//         <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
-//         <Route
-//           path="/admin/*"
-//           element={<Navigate to="/admin/login" replace />}
-//         />
-//       </Routes>
 //     </div>
 //   );
 // }
@@ -158,19 +77,71 @@
 // // Root App Component
 // export default function App() {
 //   return (
-//     <BrowserRouter>
+//     <Router>
 //       <div className="App">
-//         <AppRouter />
+//         <Routes>
+//           {/* Public routes with layout */}
+//           <Route element={<PublicLayout />}>
+//             <Route path="/" element={<Home />} />
+//             <Route path="/about-us" element={<AboutUs />} />
+//             <Route path="/mission-vision" element={<MissionVision />} />
+//             <Route path="/why-choose-us" element={<WhyChooseUs />} />
+//             <Route path="/our-team" element={<OurTeam />} />
+//             <Route path="/services/strategy" element={<Strategy />} />
+//             <Route path="/services/human" element={<Human />} />
+//             <Route path="/services/ict" element={<ICT />} />
+//             <Route path="/services/development" element={<Development />} />
+//             <Route
+//               path="/strategy"
+//               element={<Navigate to="/services/strategy" replace />}
+//             />
+//             <Route
+//               path="/human"
+//               element={<Navigate to="/services/human" replace />}
+//             />
+//             <Route
+//               path="/ict"
+//               element={<Navigate to="/services/ict" replace />}
+//             />
+//             <Route
+//               path="/development"
+//               element={<Navigate to="/services/development" replace />}
+//             />
+//             <Route path="/contact" element={<Contact />} />
+//             <Route path="/projects" element={<Projects />} />
+//             <Route path="/projects/:id" element={<ProjectDetails />} />
+//             <Route path="*" element={<Navigate to="/" replace />} />
+//           </Route>
+
+//           {/* Admin routes */}
+//           <Route
+//             path="/admin/login"
+//             element={
+//               <PublicRoute>
+//                 <Login />
+//               </PublicRoute>
+//             }
+//           />
+//           <Route
+//             path="/admin/dashboard/*"
+//             element={
+//               <ProtectedRoute>
+//                 <DashboardLayout />
+//               </ProtectedRoute>
+//             }
+//           />
+//           <Route
+//             path="/admin"
+//             element={<Navigate to="/admin/login" replace />}
+//           />
+//           <Route
+//             path="/admin/*"
+//             element={<Navigate to="/admin/login" replace />}
+//           />
+//         </Routes>
 //       </div>
-//     </BrowserRouter>
+//     </Router>
 //   );
-// }
-
-// // Main Router Logic
-// function AppRouter() {
-//   const isAdmin = useIsAdminRoute();
-
-//   return isAdmin ? <AdminSection /> : <PublicSite />;
 // }
 import React from "react";
 import {
@@ -208,13 +179,59 @@ import Development from "./pages/Services/Development";
 
 import ProjectDetails from "./components/Projects/ProjectDetails";
 
-// Enhanced auth check with error handling
+// JWT Token Decoding Function
+function parseJwt(token) {
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    return null;
+  }
+}
+
+// Enhanced auth check with expiration validation
 function useAuth() {
   try {
     const token = localStorage.getItem("token");
-    return !!token;
+    const tokenExpiration = localStorage.getItem("tokenExpiration");
+
+    if (!token) return false;
+
+    // Check expiration from storage
+    if (tokenExpiration) {
+      if (Date.now() >= parseInt(tokenExpiration)) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("tokenExpiration");
+        return false;
+      }
+      return true;
+    }
+
+    // Fallback: Decode token to get expiration
+    const decoded = parseJwt(token);
+    if (decoded?.exp) {
+      const expirationTime = decoded.exp * 1000;
+      localStorage.setItem("tokenExpiration", expirationTime.toString());
+
+      if (Date.now() >= expirationTime) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("tokenExpiration");
+        return false;
+      }
+      return true;
+    }
+
+    // Token exists but no expiration info
+    return true;
   } catch (error) {
-    console.error("Error accessing localStorage:", error);
+    console.error("Authentication check failed:", error);
     return false;
   }
 }
@@ -292,7 +309,18 @@ export default function App() {
             path="/admin/login"
             element={
               <PublicRoute>
-                <Login />
+                <Login
+                  onLoginSuccess={(token) => {
+                    localStorage.setItem("token", token);
+                    const decoded = parseJwt(token);
+                    if (decoded?.exp) {
+                      localStorage.setItem(
+                        "tokenExpiration",
+                        (decoded.exp * 1000).toString()
+                      );
+                    }
+                  }}
+                />
               </PublicRoute>
             }
           />
